@@ -1,0 +1,163 @@
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prediksi Waktu Pengeluaran</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+  </head>
+  <body>
+      <div class="block">
+          <section class="hero is-dark is-bold">
+              <div class="hero-body">
+                  <div class="container has-text-centered">
+                      <h1 class="title">Prediksi Waktu Pengeluaran Peti Kemas Impor</h1>
+                  </div><br>
+                  <div class="container has-text-centered">
+                        <a href="{{url_for('index')}}" class="button is-info is-rounded has-text-centered">Reset</a>
+                  </div>
+
+              </div>
+          </section>
+      </div>
+      <article class="message is-primary">
+          <div class="message-header">
+              <p>Inputs</p>
+          </div>
+          <div class="message-body">
+            <div class="card">
+                <!--
+                <header class="card-header">
+                    <p class="card-header-title is-centered">Inputs</p>
+                </header> -->
+                <div class="card-content">
+                    <form action="{{ url_for('analyze') }}" method="POST">
+                        <div class="columns">
+                            <div class="column">
+                                    <div class="field">
+                                            <label for="Berat" class="label">Berat</label>
+                                            <div class="control">
+                                                <input type="number" name="berat_kotor" class="input" placeholder="Berat minimal 5000" min="5000" max="30000" step="100">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="Jenis Dokumen" class="label">Jenis Dokumen</label>
+                                            <div class="control">
+                                                <div class="select is-primary">
+                                                    <select name="jenis_dokumen" id="role_dokumen">
+                                                        <option value="0">Ata Carnet</option>
+                                                        <option value="1">BC 12</option>
+                                                        <option value="2">BC 16</option>
+                                                        <option value="3">BC 20</option>
+                                                        <option value="4">BC 23</option>
+                                                        <option value="5">BC 30</option>
+                                                        <option value="6">BCF 15</option>
+                                                        <option value="7">Cikarang Dry Port</option>
+                                                        <option value="8">Empty Container</option>
+                                                        <option value="9">Lain-Lain</option>
+                                                        <option value="10">NHI</option>
+                                                        <option value="11">PIBK</option>
+                                                        <option value="12">PLP</option>
+                                                        <option value="13">Partoff Mita</option>
+                                                        <option value="14">Partoff Non Mita</option>
+                                                        <option value="15">Returnable Package</option>
+                                                        <option value="16">SPPBE</option>
+                                                        <option value="17">SPPF</option>
+                                                        <option value="18">Shortshipment</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="column">
+                                    <div class="field">
+                                            <label for="dalam_antrian" class="label">Antrian</label>
+                                            <div class="control">
+                                                <input type="number" name="dalam_antrian" class="input" placeholder="Masukan jumlah antrian" min="0" max="1000" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="field">
+                                            <label for="Hari" class="label">Hari</label>
+                                            <div class="control">
+                                                <div class="select is-primary">
+                                                    <select name="hari" id="hari">
+                                                        <option value="0">Senin</option>
+                                                        <option value="1">Selasa</option>
+                                                        <option value="2">Rabu</option>
+                                                        <option value="3">Kamis</option>
+                                                        <option value="4">Jumat</option>
+                                                        <option value="5">Sabtu</option>
+                                                        <option value="6">Minggu</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="column">
+                                <div class="field">
+                                    <label for="bulan" class="label">Bulan</label>
+                                        <div class="control">
+                                            <input type="number" name="bulan" class="input" placeholder="Bulan 1-12" min="0" max="12" step="1">
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <label for="ukuran_container" class="label">Ukuran Peti Kemas</label>
+                                        <div class="control">
+                                            <div class="select is-primary">
+                                            <select name="ukuran_container" id="ukuran_container">
+                                                <option value="0">20 Feet</option>
+                                                <option value="1">40 Feet</option>
+                                                <option value="2">45 Feet</option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <br>
+                      <div class="container has-text-centered">
+                            <div class="field">
+                                    <label for="role" class="label">Select Model</label>
+                                    <div class="control">
+                                        <div class="container has-text-centered">
+                                                <div class="select is-primary">
+                                                        <select name="model_choice" id="role">
+                                                            <option value='Light Gradient Boosting Machine'>Light GBM</option>
+                                                            <option value='Random Forest Regression'>Random Forest Regression</option>
+                                                            <option value='XGBOOST'>XGBoost</option>
+                                                        </select>
+                                                    </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <button class="button is-primary" type="submit">Predict</button>
+                                <button class="button" type="reset">Clear</button>
+                      </div>
+
+                    </form>
+                </div>
+            </div>
+          </div>
+      </article>
+
+      <footer class="footer">
+            <div class="content has-text-centered">
+              <p>
+                <strong>
+             Copyright &copy; Dodi, Project 2022
+         </strong> <br>
+              </p>
+            </div>
+          </footer>
+  </body>
+</html>
+
+{% endblock %}
